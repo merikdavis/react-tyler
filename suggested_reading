@@ -1,0 +1,83 @@
+this keyword:
+
+In order to know what the this keyword is referencing. You have to know
+when "this" is being called. In javascript, object methods and properties
+are in the context of the object preceding it. So if you pass a this.method 
+by props in React. The method will be undefined because props -itself - does not have
+access to setState (defined in React.Component).
+
+In order to pass a method via props, you must first bind the function to the 
+object you wish to call it from (more often than not using the keyword "this")
+
+this.method = this.method.bind(this)
+
+Basically anywhere where another component may be using another components method,
+you will want to bind the method in the constructor.
+
+
+Always use methods on state that return new values rather than modifying the 
+original value. This is because React needs to do a comparison between the old
+and new values. If you directly modify the old value, it cannot compare state.
+
+array functions:
+    .filter()
+        returns a new array with all the elements that pass the test
+        in the function. The function has one required parameters and 2 additional
+        parameters:
+            element - the value of the current index
+            index - the index currently being considered
+            array - the array that filter is being called on.
+
+        var words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
+
+        const result = words.filter(word => word.length > 6);
+
+        console.log(result);
+        // expected output: Array ["exuberant", "destruction", "present"]
+        
+    .map()
+        applies a function against an array's elements.
+        the function has 3 parameters with only the first one being required.
+            currentValue - the value of the current index
+            index - the current index
+            array - the array that map is being called on.
+
+        var array1 = [1, 4, 9, 16];
+
+        // pass a function to map
+        const map1 = array1.map(x => x * 2);
+
+        console.log(map1);
+        // expected output: Array [2, 8, 18, 32]
+
+
+    .reduce() 
+        applies a function against an array from left to right
+        and accumulates the value so that all that is returned is
+        a single value. Has an additional optional parameter to 
+        start the value at a specific value (initialValue).
+
+        the function created requires two parameters with two additional
+        optional parameters:
+            accumulator - this is the accumulated value.
+            currentValue - this is the value of the arrays current index.
+            currentIndex(optional) - starts at 0 (if initialValue is specified)
+                or 1 if not specified.
+            array - the array reduce was called on.
+
+        const array1 = [1, 2, 3, 4];
+        const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+        // 1 + 2 + 3 + 4
+        console.log(array1.reduce(reducer));
+        // expected output: 10
+
+        // 5 + 1 + 2 + 3 + 4
+        console.log(array1.reduce(reducer, 5));
+        // expected output: 15
+
+    .concat
+        Concatonates an element to the end of the array and returns a new array.
+        push doesn't work because it modifies the original array.
+
+        
